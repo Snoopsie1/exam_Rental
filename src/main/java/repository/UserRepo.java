@@ -84,6 +84,7 @@ public class UserRepo {
         } finally {
             em.close();
         }
+
         return foundRentals;
     }
 
