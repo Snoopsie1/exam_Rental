@@ -2,7 +2,7 @@ package repository;
 
 import entities.Role;
 import entities.User;
-import security.security.errorhandling.AuthenticationException;
+import security.errorhandling.AuthenticationException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
