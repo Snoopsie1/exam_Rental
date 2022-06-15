@@ -1,11 +1,16 @@
 package repository;
 
+import entities.Rental;
 import entities.Role;
+import entities.Tenant;
 import entities.User;
 import security.errorhandling.AuthenticationException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author lam@cphbusiness.dk
@@ -68,6 +73,22 @@ public class UserRepo {
         }
 
         return user;
+    }
+
+    //TODO: As a user, I would like to see all my rental agreements
+    public List<Rental> seeAllTenantsRentals(int tenantId){
+        List<Rental> rentalList = new ArrayList<>();
+        EntityManager em = emf.createEntityManager();
+        try {
+            Tenant demoTenant = em.find(Tenant.class, tenantId);
+            if (demoTenant == null)
+                throw new EntityNotFoundException("The Tenant Entity with ID: "+ tenantId +" was not found or doesn't exist.");
+            rentalList = demoTenant.getRentals();
+        } finally {
+            em.close();
+        }
+
+        return rentalList;
     }
 
 }
