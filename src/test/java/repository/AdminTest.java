@@ -223,17 +223,14 @@ public class AdminTest {
     @Test
     public void US7_deleteRentalAgreementTest(){
         EntityManager em = emf.createEntityManager();
+
+        //Creating and checking if it's in the DB
         Rental rentalParams = adminREPO.createRental("24.08.1922", "12.12.2029", 2840, 2840*3, "Anders Andersen", null, null);
         assertNotNull(em.find(Rental.class, rentalParams.getId()));
 
-        Rental rentalAgreementToDelete = em.find(Rental.class, rentalParams.getId());
-        try {
-            em.getTransaction().begin();
-            em.remove(rentalAgreementToDelete);
-            em.getTransaction().commit();
-            assertNull(em.find(Rental.class, rentalAgreementToDelete.getId()));
-        } finally {
-            em.close();
-        }
+        //Deleting and checking ifi t's NOT in the DB
+        Rental rentalAgreementToDelete = adminREPO.removeRentalAgreement(rentalParams.getId());
+        assertNull(rentalAgreementToDelete);
+
     }
 }

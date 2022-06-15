@@ -176,4 +176,19 @@ public class AdminRepo {
         return foundRental;
     }
 
+    public Rental removeRentalAgreement(int rentalToRemoveId){
+        EntityManager em = emf.createEntityManager();
+        Rental rentalAgreementToDelete = em.find(Rental.class, rentalToRemoveId);
+        try {
+            em.getTransaction().begin();
+            em.remove(rentalAgreementToDelete);
+            em.getTransaction().commit();
+
+            rentalAgreementToDelete = em.find(Rental.class, rentalToRemoveId);
+        } finally {
+            em.close();
+        }
+        return rentalAgreementToDelete;
+    }
+
 }
