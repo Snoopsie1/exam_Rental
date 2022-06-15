@@ -17,6 +17,7 @@ import org.junit.jupiter.api.Test;
 import utils.Populator;
 
 import javax.persistence.EntityManagerFactory;
+import javax.xml.bind.SchemaOutputResolver;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -94,7 +95,7 @@ public class UserTest {
 
     //TODO: US-1 As a user, I would like to see all my rental agreements
     @Test
-    public void seeAllAgreementsTest() throws Exception {
+    public void US1_seeAllAgreementsTest() throws Exception {
         List<Rental> expectedRentalList = demoRentalList;
 
         expectedRentalList.add(demoRental);
@@ -116,7 +117,7 @@ public class UserTest {
     //5. ???
     //6. Profit.
     @Test
-    public void seeDetailsAboutHouseFromAgreement() throws Exception {
+    public void US2_seeDetailsAboutHouseFromAgreementTest() throws Exception {
         House expectedHouse = demoHouse2;
         House actualHouse = userREPO.seeDetailsAboutHouseFromRentalID(2);
 
@@ -143,7 +144,7 @@ public class UserTest {
     //3. Use House ID to find Rental Entity
     //4. Use Rental Entity's ID to see all Tenant IDs that is on Tenant_Rental table
     @Test
-    public void seeTenantsLivingInHouse() throws Exception{
+    public void US3_seeTenantsLivingInHouseTest() throws Exception{
         List<Tenant> expectedTenants = demoTenantList;
         List<Tenant> actualTenants = userREPO.getTenantsInSpecificHouse(1);
 
@@ -167,6 +168,44 @@ public class UserTest {
         }
         System.out.println("- - - - - - - - - - - - - - -");
         assertEquals(expectedTenants.equals(actualTenants), actualTenants.equals(expectedTenants));
+    }
 
+    //TODO: US-4 As an admin I would like to create new rental agreements, tenants and houses
+    //Process
+    //1. Create Tenants List
+    //2. Create Rental List
+    //3. Create House
+    //4. Create Rental (With null value on Tenants)
+    //5. Create Tenant
+    //6. Add Tenant to Tenant List
+    //7. Set Tenants on Rental
+    //8. Add Rental to Rental List
+    //9. ???
+    //10. Profit.
+
+    //After thought: Split these steps up into multiple methods,
+    // so admin can on the website create houses, tenants and rentals independently?
+    @Test
+    public void US4_createHouseTest() {
+        EntityManager em = emf.createEntityManager();
+
+        String givenAddress = "Nørrebrogade 44";
+        String givenCity = "KBH N";
+        int givenNumOfRooms = 2;
+
+        House houseToBeCreated = new House(givenAddress, givenCity, givenNumOfRooms);
+
+        try {
+            em.getTransaction().begin();
+            em.persist(houseToBeCreated);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+
+        System.out.println("House created with these details: ");
+        System.out.println("Address: " + givenAddress);
+        System.out.println("City: " + givenCity);
+        System.out.println("NumOfRooms: " + givenNumOfRooms);
     }
 }

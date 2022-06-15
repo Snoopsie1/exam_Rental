@@ -84,14 +84,17 @@ public class Populator {
             em.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
+            System.out.println("- - - - - - - - - - - - - - -");
             System.out.println("ERROR WHEN DROPPING & RECREATING DB :(");
+            System.out.println("- - - - - - - - - - - - - - -");
         } finally {
             //Save and commit changes to DB
             em.close();
             emf.close();
         }
-
+        System.out.println("- - - - - - - - - - - - - - -");
         System.out.println("DB dropped, then created! :)");
+        System.out.println("- - - - - - - - - - - - - - -");
     }
 
     public static void populateLocalTEST() {
@@ -162,13 +165,17 @@ public class Populator {
             em.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
+            System.out.println("- - - - - - - - - - - - - - -");
             System.out.println("ERROR WHEN DROPPING & RECREATING TEST DB :(");
+            System.out.println("- - - - - - - - - - - - - - -");
         } finally {
             //Save and commit changes to DB
             em.close();
             emf.close();
         }
 
+        System.out.println("- - - - - - - - - - - - - - -");
         System.out.println("TEST DB dropped, then created! :)");
+        System.out.println("- - - - - - - - - - - - - - -");
     }
 }

@@ -5,7 +5,7 @@ import javax.persistence.*;
 @Entity
 public class House {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //Der Stod GenerationType.AUTO før. Men IDENTITY virker?
     private int id;
 
     private String address;
@@ -18,6 +18,13 @@ public class House {
 
     public House(int id, String address, String city, int numberOfRooms) {
         this.id = id;
+        this.address = address;
+        this.city = city;
+        this.numberOfRooms = numberOfRooms;
+    }
+
+    //For Admin to create a house.
+    public House(String address, String city, int numberOfRooms) {
         this.address = address;
         this.city = city;
         this.numberOfRooms = numberOfRooms;
