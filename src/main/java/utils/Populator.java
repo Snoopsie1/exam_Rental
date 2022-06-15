@@ -84,14 +84,14 @@ public class Populator {
             em.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("All is not good :(");
+            System.out.println("ERROR WHEN DROPPING & RECREATING DB :(");
         } finally {
             //Save and commit changes to DB
             em.close();
             emf.close();
         }
 
-        System.out.println("all is good:)");
+        System.out.println("DB dropped, then created! :)");
     }
 
     public static void populateLocalTEST() {
@@ -162,13 +162,13 @@ public class Populator {
             em.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("TEST - All is not good :(");
+            System.out.println("ERROR WHEN DROPPING & RECREATING TEST DB :(");
         } finally {
             //Save and commit changes to DB
             em.close();
             emf.close();
         }
 
-        System.out.println("TEST - All is good:)");
+        System.out.println("TEST DB dropped, then created! :)");
     }
 }

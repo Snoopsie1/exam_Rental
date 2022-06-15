@@ -24,9 +24,11 @@ public class UserTest {
     private static UserRepo userREPO;
 
     private House demoHouse;
+    private House demoHouse2;
     private Rental demoRental;
     private Tenant demoTenant;
-    private List<Tenant> demoTenantList = new ArrayList<>();
+    private List<Tenant> demoTenantList;
+    private List<Rental> demoRentalList;
 
 
 
@@ -49,6 +51,18 @@ public class UserTest {
     @BeforeEach
     public void setup() {
         EntityManager em = emf.createEntityManager();
+
+        demoTenantList = new ArrayList<>();
+        demoRentalList = new ArrayList<>();
+
+        demoHouse = new House(1, "Valnøddevej 4", "Hornbæk",6);
+        demoHouse2 = new House(2, "Bretagnevej 28", "Ålsgårde", 4);
+        demoRental = new Rental(1,"15.02.1982", "22.02.2048", 4850, 14550, "Morten Olsen",null, demoHouse);
+        demoRentalList.add(demoRental);
+        demoTenant =  new Tenant(1, "Ole Henriksen", 22505084, "Make-Up Manden", demoRentalList);
+        demoTenantList.add(demoTenant);
+        demoRental.setTenants(demoTenantList);
+
         try {
             em.getTransaction().begin();
             Populator.populateLocalTEST();
@@ -80,13 +94,7 @@ public class UserTest {
     //TODO: As a user, I would like to see all my rental agreements
     @Test
     public void seeAllAgreementsTest() throws Exception {
-        List<Rental> expectedRentalList = new ArrayList<>();
-
-        demoHouse = new House(1, "Valnøddevej 4", "Hornbæk",6);
-        demoRental = new Rental(1,"15.02.1982", "22.02.2048", 4850, 14550, "Morten Olsen",null, demoHouse);
-        demoTenant =  new Tenant(1, "Ole Henriksen", 22505084, "Make-Up Manden", expectedRentalList);
-        demoTenantList.add(demoTenant);
-        demoRental.setTenants(demoTenantList);
+        List<Rental> expectedRentalList = demoRentalList;
 
         expectedRentalList.add(demoRental);
 
@@ -98,4 +106,42 @@ public class UserTest {
         assertEquals(expectedRentalList.equals(actualRentalList), actualRentalList.equals(expectedRentalList));
     }
 
+    //TODO: As a user, I would like to click on a rental agreement and see all details about the house
+    //Process:
+    //1. User Clicks on Rental Agreement
+    //2. Click gets the Rental Agreement's ID
+    //3. Parse ID into method
+    //4. Retrieve House Details via said, ID
+    //5. ???
+    //6. Profit.
+    @Test
+    public void seeDetailsAboutHouseFromAgreement() throws Exception {
+        House expectedHouse = demoHouse2;
+        House actualHouse;
+        int retrievedId = 2;
+
+        EntityManager em = emf.createEntityManager();
+
+        try {
+            Rental retrievedRental = em.find(Rental.class, retrievedId);
+            actualHouse = em.find(House.class, retrievedRental.getHouse().getId());
+        } finally {
+            em.close();
+        }
+
+        System.out.println("- - - - - - - - - - - - - - -");
+        System.out.println("Expected House Details:");
+        System.out.println("ID: " +expectedHouse.getId());
+        System.out.println("Address: " +expectedHouse.getAddress());
+        System.out.println("City: " +expectedHouse.getCity());
+        System.out.println("Number of Rooms: " +expectedHouse.getNumberOfRooms());
+        System.out.println("- - - - - - - - - - - - - - -");
+        System.out.println("Expected House Details:");
+        System.out.println("ID: " +actualHouse.getId());
+        System.out.println("Address: " +actualHouse.getAddress());
+        System.out.println("City: " +actualHouse.getCity());
+        System.out.println("Number of Rooms: " +actualHouse.getNumberOfRooms());
+        System.out.println("- - - - - - - - - - - - - - -");
+        assertEquals(expectedHouse.equals(actualHouse), actualHouse.equals(expectedHouse));
+    }
 }
