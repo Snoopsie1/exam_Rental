@@ -176,6 +176,7 @@ public class AdminRepo {
         return foundRental;
     }
 
+    //TODO: US-7 As an admin, I would like to delete a rental agreement
     public Rental removeRentalAgreement(int rentalToRemoveId){
         EntityManager em = emf.createEntityManager();
         Rental rentalAgreementToDelete = em.find(Rental.class, rentalToRemoveId);

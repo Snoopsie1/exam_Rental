@@ -106,4 +106,12 @@ public class AdminResource {
         }
         return Response.ok().entity(GSON.toJson(new RentalDTO(adminREPO.changeTenantsOnRentalAgreement(id, tenants)))).build();
     }
+
+    //TODO: US-7 As an admin, I would like to delete a rental agreement
+    @DELETE
+    @Path("/rental/remove/{id}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response delete(@PathParam("id") int id) throws EntityNotFoundException {
+        return Response.ok().entity(GSON.toJson(new RentalDTO(adminREPO.removeRentalAgreement(id)))).build();
+    }
 }
