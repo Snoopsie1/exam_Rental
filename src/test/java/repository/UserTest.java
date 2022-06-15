@@ -20,5 +20,16 @@ public class UserTest {
 
     }
 
+    @BeforeAll
+    public static void setupClass() {
+        emf = EMF_Creator.createEntityManagerFactoryForTest();
+        userREPO = UserRepo.getUserRepo(emf);
+    }
+
+    //TODO: Is unnecessary, remove later
+    @AfterAll
+    public static void tearDownClass() {
+//        Clean up database after test is done or use a persistence unit with drop-and-create to start up clean on every test
+    }
 
 }
