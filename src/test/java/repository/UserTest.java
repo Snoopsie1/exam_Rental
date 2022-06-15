@@ -5,6 +5,7 @@ import entities.Rental;
 import entities.Tenant;
 import utils.EMF_Creator;
 
+import javax.enterprise.inject.Typed;
 import javax.persistence.*;
 
 import org.junit.jupiter.api.AfterAll;
@@ -91,7 +92,7 @@ public class UserTest {
 //        }
 //    }
 
-    //TODO: US1 As a user, I would like to see all my rental agreements
+    //TODO: US-1 As a user, I would like to see all my rental agreements
     @Test
     public void seeAllAgreementsTest() throws Exception {
         List<Rental> expectedRentalList = demoRentalList;
@@ -106,7 +107,7 @@ public class UserTest {
         assertEquals(expectedRentalList.equals(actualRentalList), actualRentalList.equals(expectedRentalList));
     }
 
-    //TODO: US2 As a user, I would like to click on a rental agreement and see all details about the house
+    //TODO: US-2 As a user, I would like to click on a rental agreement and see all details about the house
     //Process:
     //1. User Clicks on Rental Agreement
     //2. Click gets the Rental Agreement's ID
@@ -126,12 +127,61 @@ public class UserTest {
         System.out.println("City: " +expectedHouse.getCity());
         System.out.println("Number of Rooms: " +expectedHouse.getNumberOfRooms());
         System.out.println("- - - - - - - - - - - - - - -");
-        System.out.println("Expected House Details:");
+        System.out.println("Actual House Details:");
         System.out.println("ID: " +actualHouse.getId());
         System.out.println("Address: " +actualHouse.getAddress());
         System.out.println("City: " +actualHouse.getCity());
         System.out.println("Number of Rooms: " +actualHouse.getNumberOfRooms());
         System.out.println("- - - - - - - - - - - - - - -");
         assertEquals(expectedHouse.equals(actualHouse), actualHouse.equals(expectedHouse));
+    }
+
+    //TODO: US-3 As an admin, I would like to see all tenants currently living in a particular house
+    //Process
+    //1. Admin clicks on house
+    //2. Click registers house's ID
+    //3. Use House ID to find Rental Entity
+    //4. Use Rental Entity's ID to see all Tenant IDs that is on Tenant_Rental table
+    @Test
+    public void seeTenantsLivingInHouse() throws Exception{
+        List<Tenant> expectedTenants = demoTenantList;
+
+        EntityManager em = emf.createEntityManager();
+        List<Tenant> actualTenants;
+        int givenId = 1;
+
+        try {
+            House tenantsHouse = em.find(House.class, givenId);
+            TypedQuery<Rental> rentalTQ = em.createQuery("SELECT r FROM Rental r WHERE r.house.id is not null and r.house.id = :givenHouseId", Rental.class);
+            rentalTQ.setParameter("givenHouseId", tenantsHouse.getId());
+            Rental tenantsRental = rentalTQ.getSingleResult();
+            TypedQuery<Tenant> tenantTQ = em.createQuery("SELECT DISTINCT t FROM Tenant t join t.rentals tr where tr.id =:tenantsRentalId", Tenant.class);
+            tenantTQ.setParameter("tenantsRentalId", tenantsRental.getId());
+            actualTenants = tenantTQ.getResultList();
+        } finally {
+            em.close();
+        }
+
+        System.out.println("- - - - - - - - - - - - - - -");
+        System.out.println("Expected Tenants List:");
+        System.out.println("List Size: "+ expectedTenants.size());
+        for (Tenant expectedTenant : expectedTenants) {
+            System.out.println("ID: " + expectedTenant.getId());
+            System.out.println("Name: " + expectedTenant.getName());
+            System.out.println("PhoneNum: " + expectedTenant.getPhoneNum());
+            System.out.println("Job : " + expectedTenant.getJob());
+        }
+        System.out.println("- - - - - - - - - - - - - - -");
+        System.out.println("Actual Tenants List:");
+        System.out.println("List Size: "+ actualTenants.size());
+        for (Tenant actualTenant : actualTenants) {
+            System.out.println("ID: " + actualTenant.getId());
+            System.out.println("Name: " + actualTenant.getName());
+            System.out.println("PhoneNum: " + actualTenant.getPhoneNum());
+            System.out.println("Job : " + actualTenant.getJob());
+        }
+        System.out.println("- - - - - - - - - - - - - - -");
+        assertEquals(expectedTenants.equals(actualTenants), actualTenants.equals(expectedTenants));
+
     }
 }
