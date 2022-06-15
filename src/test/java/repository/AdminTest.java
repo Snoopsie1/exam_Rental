@@ -16,7 +16,7 @@ import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class AdminTest {
     private static EntityManagerFactory emf;
@@ -201,6 +201,39 @@ public class AdminTest {
         }
 
         assertEquals("Ole Henriksen", actualRentalToChange.getTenants().get(0).getName());
+    }
 
+    //TODO: US-6 As an admin I would like to update all information about a rental agreement, its tenants, and the house
+    //Process:
+    //1. Admin presses update on Rental Agreement
+    //2. Click saves the given Rental Agreement's ID
+    //3. Find Rental Agreement with ID
+    //4. Override Rental Agreement with new data.
+    @Test
+    public void US6_updateEntireRentalAgreementTest(){
+
+    }
+
+    //TODO: US-7 As an admin, I would like to delete a rental agreement
+    //Process:
+    //1. Admin presses on rental agreement
+    //2. Click saves the given Rental Agreement's ID
+    //3. Find Rental Agreement with ID
+    //4. Delete it.
+    @Test
+    public void US7_deleteRentalAgreementTest(){
+        EntityManager em = emf.createEntityManager();
+        Rental rentalParams = adminREPO.createRental("24.08.1922", "12.12.2029", 2840, 2840*3, "Anders Andersen", null, null);
+        assertNotNull(em.find(Rental.class, rentalParams.getId()));
+
+        Rental rentalAgreementToDelete = em.find(Rental.class, rentalParams.getId());
+        try {
+            em.getTransaction().begin();
+            em.remove(rentalAgreementToDelete);
+            em.getTransaction().commit();
+            assertNull(em.find(Rental.class, rentalAgreementToDelete.getId()));
+        } finally {
+            em.close();
+        }
     }
 }
