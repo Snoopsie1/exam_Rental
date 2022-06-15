@@ -75,18 +75,16 @@ public class UserRepo {
 
     //TODO: US-1 As a user, I would like to see all my rental agreements
     public List<Rental> seeAllTenantsRentals(int tenantId){
-        List<Rental> rentalList = new ArrayList<>();
         EntityManager em = emf.createEntityManager();
+        List<Rental> foundRentals;
         try {
-            Tenant demoTenant = em.find(Tenant.class, tenantId);
-            if (demoTenant == null)
-                throw new EntityNotFoundException("The Tenant Entity with ID: "+ tenantId +" was not found or doesn't exist.");
-            rentalList = demoTenant.getRentals();
+            TypedQuery<Rental> rentalTQ = em.createQuery("SELECT DISTINCT r FROM Rental r join r.tenants rt where rt.id =:tenantsRentalId", Rental.class);
+            rentalTQ.setParameter("tenantsRentalId", tenantId);
+            foundRentals = rentalTQ.getResultList();
         } finally {
             em.close();
         }
-
-        return rentalList;
+        return foundRentals;
     }
 
     //TODO: US-2 As a user, I would like to click on a rental agreement and see all details about the house
@@ -108,24 +106,4 @@ public class UserRepo {
         return foundHouse;
     }
 
-    //TODO: US-3 As an admin, I would like to see all tenants currently living in a particular house
-    public List<Tenant> getTenantsInSpecificHouse(int houseId){
-        EntityManager em = emf.createEntityManager();
-        List<Tenant> foundTenants;
-        int givenId = 1;
-
-        try {
-            House tenantsHouse = em.find(House.class, givenId);
-            TypedQuery<Rental> rentalTQ = em.createQuery("SELECT r FROM Rental r WHERE r.house.id is not null and r.house.id = :givenHouseId", Rental.class);
-            rentalTQ.setParameter("givenHouseId", tenantsHouse.getId());
-            Rental tenantsRental = rentalTQ.getSingleResult();
-            TypedQuery<Tenant> tenantTQ = em.createQuery("SELECT DISTINCT t FROM Tenant t join t.rentals tr where tr.id =:tenantsRentalId", Tenant.class);
-            tenantTQ.setParameter("tenantsRentalId", tenantsRental.getId());
-            foundTenants = tenantTQ.getResultList();
-        } finally {
-            em.close();
-        }
-
-        return foundTenants;
-    }
 }
