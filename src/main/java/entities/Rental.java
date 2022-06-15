@@ -6,7 +6,7 @@ import java.util.List;
 @Entity
 public class Rental {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //Changed from AUTO -> IDENTITY
     private int id;
 
     private String startDate;
@@ -27,6 +27,17 @@ public class Rental {
 
     public Rental(int id, String startDate, String endDate, int priceAnnual, int deposit, String contactPerson, List<Tenant> tenants, House house) {
         this.id = id;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.priceAnnual = priceAnnual;
+        this.deposit = deposit;
+        this.contactPerson = contactPerson;
+        this.tenants = tenants;
+        this.house = house;
+    }
+
+    //For Admin to create a Rental Agreement.
+    public Rental(String startDate, String endDate, int priceAnnual, int deposit, String contactPerson, List<Tenant> tenants, House house) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.priceAnnual = priceAnnual;
@@ -98,5 +109,20 @@ public class Rental {
 
     public void setHouse(House house) {
         this.house = house;
+    }
+
+    @Override
+    public String toString() {
+        return "Rental" +
+                "\n{" +
+                "\n id: " + id +
+                "\n startDate: " + startDate + '\'' +
+                "\n endDate: " + endDate + '\'' +
+                "\n priceAnnual: " + priceAnnual +
+                "\n deposit: " + deposit +
+                "\n contactPerson: " + contactPerson + '\'' +
+                "\n tenants: " + tenants +
+                "\n house: " + house +
+                "\n}";
     }
 }

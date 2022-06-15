@@ -24,6 +24,7 @@ import java.util.List;
 public class UserTest {
     private static EntityManagerFactory emf;
     private static UserRepo userREPO;
+    private static AdminRepo adminREPO;
 
     private House demoHouse;
     private House demoHouse2;
@@ -34,14 +35,13 @@ public class UserTest {
 
 
 
-    public UserTest() {
-
-    }
+    public UserTest() {}
 
     @BeforeAll
     public static void setupClass() {
         emf = EMF_Creator.createEntityManagerFactoryForTest();
         userREPO = UserRepo.getUserRepo(emf);
+        adminREPO = AdminRepo.getAdminRepo(emf);
     }
 
     //TODO: Is unnecessary, remove later
@@ -187,25 +187,63 @@ public class UserTest {
     // so admin can on the website create houses, tenants and rentals independently?
     @Test
     public void US4_createHouseTest() {
+        House createdHouse = adminREPO.createHouse("Nørrebrogade 44", "KBH N", 2);
+
+        System.out.println("House created with these details: ");
+        System.out.println("Address: " + createdHouse.getAddress());
+        System.out.println("City: " + createdHouse.getCity());
+        System.out.println("NumOfRooms: " + createdHouse.getNumberOfRooms());
+    }
+
+    @Test
+    public void US4_createRental() {
+        Rental createdRental =
+                adminREPO.createRental(
+                        "00.00.0000","14.08.1928",
+                        1234,1234*3,
+                        "Ole Olsen",null,null
+                );
+
+
+        System.out.println("Rental Agreement created with these details: ");
+        System.out.println("Start Date: " + createdRental.getStartDate());
+        System.out.println("End Date: " + createdRental.getEndDate());
+        System.out.println("Annual Price: " + createdRental.getPriceAnnual());
+        System.out.println("Deposit: " + createdRental.getDeposit());
+        System.out.println("Contact Person: " + createdRental.getContactPerson());
+        System.out.println("Tenants: " + createdRental.getTenants());
+        System.out.println("House: " + createdRental.getHouse());
+
         EntityManager em = emf.createEntityManager();
-
-        String givenAddress = "Nørrebrogade 44";
-        String givenCity = "KBH N";
-        int givenNumOfRooms = 2;
-
-        House houseToBeCreated = new House(givenAddress, givenCity, givenNumOfRooms);
-
         try {
-            em.getTransaction().begin();
-            em.persist(houseToBeCreated);
-            em.getTransaction().commit();
+            Rental checkRental = em.find(Rental.class, createdRental.getId());
+                if(checkRental == null)
+                    throw new EntityNotFoundException("TEST - Your entity was not found");
+            System.out.println("Rental Entity with ID: " + createdRental.getId() +" was found!");
         } finally {
             em.close();
         }
+    }
 
-        System.out.println("House created with these details: ");
-        System.out.println("Address: " + givenAddress);
-        System.out.println("City: " + givenCity);
-        System.out.println("NumOfRooms: " + givenNumOfRooms);
+    @Test
+    public void US4_createTenant(){
+
+        Tenant createdTenant = adminREPO.createTenant("SvenErik", 22505084, "Tømmer",null);
+
+        System.out.println("Tenant created with these details: ");
+        System.out.println("Name: " + createdTenant.getName());
+        System.out.println("Phone Number: " + createdTenant.getPhoneNum());
+        System.out.println("Job: " + createdTenant.getJob());
+        System.out.println("Rental Agreements: " + createdTenant.getRentals());
+
+        EntityManager em = emf.createEntityManager();
+        try {
+            Tenant checkTenant = em.find(Tenant.class, createdTenant.getId());
+            if(checkTenant == null)
+                throw new EntityNotFoundException("TEST - Your entity was not found");
+            System.out.println("Tenant Entity with ID: " + createdTenant.getId() +" was found!");
+        } finally {
+            em.close();
+        }
     }
 }

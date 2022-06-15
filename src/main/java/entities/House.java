@@ -23,7 +23,7 @@ public class House {
         this.numberOfRooms = numberOfRooms;
     }
 
-    //For Admin to create a house.
+    //For Admin to create a House.
     public House(String address, String city, int numberOfRooms) {
         this.address = address;
         this.city = city;
@@ -60,5 +60,16 @@ public class House {
 
     public void setNumberOfRooms(int numberOfRooms) {
         this.numberOfRooms = numberOfRooms;
+    }
+
+    @Override
+    public String toString() {
+        return "House" +
+                "\n{" +
+                "\n Id: " + id +
+                "\n Address: " + address + '\'' +
+                "\n City: " + city + '\'' +
+                "\n NumberOfRooms: " + numberOfRooms +
+                "\n}";
     }
 }

@@ -7,7 +7,7 @@ import java.util.List;
 @Entity
 public class Tenant {
     @Id
-    @GeneratedValue (strategy = GenerationType.AUTO)
+    @GeneratedValue (strategy = GenerationType.IDENTITY) //AUTO -> Identity
     private int id;
 
     private String name;
@@ -24,6 +24,13 @@ public class Tenant {
     public Tenant(int id, String name, int phoneNum, String job, List<Rental> rentals) {
         super();
         this.id = id;
+        this.name = name;
+        this.phoneNum = phoneNum;
+        this.job = job;
+        this.rentals = rentals;
+    }
+    //For Admin to create a Tenant.
+    public Tenant(String name, int phoneNum, String job, List<Rental> rentals) {
         this.name = name;
         this.phoneNum = phoneNum;
         this.job = job;
@@ -68,5 +75,17 @@ public class Tenant {
 
     public void setRentals(List<Rental> rentals) {
         this.rentals = rentals;
+    }
+
+    @Override
+    public String toString() {
+        return "Tenant" +
+                "\n{" +
+                "id: " + id +
+                "\nName: " + name + '\'' +
+                "\n PhoneNum: " + phoneNum +
+                "\n Job: " + job + '\'' +
+                "\n Rentals: " + rentals +
+                "\n}";
     }
 }
