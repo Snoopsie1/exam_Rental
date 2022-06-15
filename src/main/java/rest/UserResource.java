@@ -2,6 +2,7 @@ package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import dtos.HouseDTO;
 import dtos.RentalDTO;
 import entities.Rental;
 import repository.UserRepo;
@@ -34,7 +35,7 @@ public class UserResource {
 
     //TODO: US-1 As a user, I would like to see all my rental agreements
     @GET
-    @Path("{id}")
+    @Path("/tenantsRentals/{id}")
     @Produces({MediaType.APPLICATION_JSON})
     public Response getById(@PathParam("id") int id) throws EntityNotFoundException {
         List<Rental> rentalList = userREPO.seeAllTenantsRentals(id);
@@ -43,6 +44,14 @@ public class UserResource {
             rentalDTOList.add(new RentalDTO(rental));
         }
         return Response.ok().entity(GSON.toJson(rentalDTOList)).build();
+    }
+
+    //TODO: US-2 As a user, I would like to click on a rental agreement and see all details about the house
+    @GET
+    @Path("/house/{id}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response seeDetailsOnHouseById(@PathParam("id") int id) throws EntityNotFoundException {
+        return Response.ok().entity(GSON.toJson(new HouseDTO(userREPO.seeDetailsAboutHouseFromRentalID(id)))).build();
     }
 
 }
