@@ -145,22 +145,7 @@ public class UserTest {
     @Test
     public void seeTenantsLivingInHouse() throws Exception{
         List<Tenant> expectedTenants = demoTenantList;
-
-        EntityManager em = emf.createEntityManager();
-        List<Tenant> actualTenants;
-        int givenId = 1;
-
-        try {
-            House tenantsHouse = em.find(House.class, givenId);
-            TypedQuery<Rental> rentalTQ = em.createQuery("SELECT r FROM Rental r WHERE r.house.id is not null and r.house.id = :givenHouseId", Rental.class);
-            rentalTQ.setParameter("givenHouseId", tenantsHouse.getId());
-            Rental tenantsRental = rentalTQ.getSingleResult();
-            TypedQuery<Tenant> tenantTQ = em.createQuery("SELECT DISTINCT t FROM Tenant t join t.rentals tr where tr.id =:tenantsRentalId", Tenant.class);
-            tenantTQ.setParameter("tenantsRentalId", tenantsRental.getId());
-            actualTenants = tenantTQ.getResultList();
-        } finally {
-            em.close();
-        }
+        List<Tenant> actualTenants = userREPO.getTenantsInSpecificHouse(1);
 
         System.out.println("- - - - - - - - - - - - - - -");
         System.out.println("Expected Tenants List:");
