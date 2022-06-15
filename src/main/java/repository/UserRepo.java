@@ -1,9 +1,6 @@
 package repository;
 
-import entities.Rental;
-import entities.Role;
-import entities.Tenant;
-import entities.User;
+import entities.*;
 import security.errorhandling.AuthenticationException;
 
 import javax.persistence.EntityManager;
@@ -91,4 +88,22 @@ public class UserRepo {
         return rentalList;
     }
 
+    //TODO: As a user, I would like to click on a rental agreement and see all details about the house
+    public House seeDetailsAboutHouseFromRentalID(int rentalId){
+        House foundHouse;
+        EntityManager em = emf.createEntityManager();
+
+        try {
+            Rental retrievedRental = em.find(Rental.class, rentalId);
+                if(retrievedRental == null)
+                    throw new EntityNotFoundException("The Rental Entity with ID: "+ rentalId +" was not found or doesn't exist");
+            foundHouse = em.find(House.class, retrievedRental.getHouse().getId());
+                if(foundHouse == null)
+                    throw new EntityNotFoundException("The House Entity with ID: "+ retrievedRental.getHouse().getId() +" was not found or doesn't exist");
+        } finally {
+            em.close();
+        }
+
+        return foundHouse;
+    }
 }

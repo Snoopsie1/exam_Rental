@@ -91,7 +91,7 @@ public class UserTest {
 //        }
 //    }
 
-    //TODO: As a user, I would like to see all my rental agreements
+    //TODO: US1 As a user, I would like to see all my rental agreements
     @Test
     public void seeAllAgreementsTest() throws Exception {
         List<Rental> expectedRentalList = demoRentalList;
@@ -106,7 +106,7 @@ public class UserTest {
         assertEquals(expectedRentalList.equals(actualRentalList), actualRentalList.equals(expectedRentalList));
     }
 
-    //TODO: As a user, I would like to click on a rental agreement and see all details about the house
+    //TODO: US2 As a user, I would like to click on a rental agreement and see all details about the house
     //Process:
     //1. User Clicks on Rental Agreement
     //2. Click gets the Rental Agreement's ID
@@ -117,17 +117,7 @@ public class UserTest {
     @Test
     public void seeDetailsAboutHouseFromAgreement() throws Exception {
         House expectedHouse = demoHouse2;
-        House actualHouse;
-        int retrievedId = 2;
-
-        EntityManager em = emf.createEntityManager();
-
-        try {
-            Rental retrievedRental = em.find(Rental.class, retrievedId);
-            actualHouse = em.find(House.class, retrievedRental.getHouse().getId());
-        } finally {
-            em.close();
-        }
+        House actualHouse = userREPO.seeDetailsAboutHouseFromRentalID(2);
 
         System.out.println("- - - - - - - - - - - - - - -");
         System.out.println("Expected House Details:");
