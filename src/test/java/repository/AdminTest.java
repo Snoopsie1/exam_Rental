@@ -49,11 +49,11 @@ public class AdminTest {
         demoTenantList = new ArrayList<>();
         demoRentalList = new ArrayList<>();
 
-        demoHouse = new House(1, "Valnøddevej 4", "Hornbæk", 6);
-        demoHouse2 = new House(2, "Bretagnevej 28", "Ålsgårde", 4);
-        demoRental = new Rental(1, "15.02.1982", "22.02.2048", 4850, 14550, "Morten Olsen", null, demoHouse);
+        demoHouse = new House("Valnøddevej 4", "Hornbæk", 6);
+        demoHouse2 = new House("Bretagnevej 28", "Ålsgårde", 4);
+        demoRental = new Rental("15.02.1982", "22.02.2048", 4850, 14550, "Morten Olsen", null, demoHouse);
         demoRentalList.add(demoRental);
-        demoTenant = new Tenant(1, "Ole Henriksen", 22505084, "Make-Up Manden", demoRentalList);
+        demoTenant = new Tenant("Ole Henriksen", 22505084, "Make-Up Manden", demoRentalList);
         demoTenantList.add(demoTenant);
         demoRental.setTenants(demoTenantList);
     }
@@ -179,10 +179,10 @@ public class AdminTest {
     public void US5_changeTenantOnRentalTest(){
 
         //Expectation Setup
-        Rental expectedRentalToChange = new Rental(3,"21.09.2004", "18.11.2068", 9427, (9427*3), "Helvig Kartoffelberg", null, null);
+        Rental expectedRentalToChange = new Rental("21.09.2004", "18.11.2068", 9427, (9427*3), "Helvig Kartoffelberg", null, null);
         List<Rental> rentalList3 = new ArrayList<>();
         rentalList3.add(expectedRentalToChange);
-        Tenant tenant3 = new Tenant(3,"Hella Joof", 28649020, "Medie-Menneske", rentalList3);
+        Tenant tenant3 = new Tenant("Hella Joof", 28649020, "Medie-Menneske", rentalList3);
         List<Tenant> tenantList3 = new ArrayList<>();
         tenantList3.add(tenant3);
         expectedRentalToChange.setTenants(tenantList3);

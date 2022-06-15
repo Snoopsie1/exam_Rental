@@ -12,8 +12,8 @@ import java.util.List;
 public class Populator {
 
     public static void main(String[] args) {
-        //populateLocal();
-        populateLocalTEST();
+        populateLocal();
+        //populateLocalTEST();
     }
 
     public static void populateLocal() {
@@ -28,17 +28,17 @@ public class Populator {
             //En mand kan derfor først sætte sig som udlejer til sidst
 
             //Create House Entities
-            House house1 = new House(1,"Valnøddevej 4", "Hornbæk", 6);
-            House house2 = new House(2,"Bretagnevej 28", "Ålsgårde", 4);
-            House house3 = new House(3,"Svanemøllevej 58", "Hellerup", 8);
+            House house1 = new House("Valnøddevej 4", "Hornbæk", 6);
+            House house2 = new House("Bretagnevej 28", "Ålsgårde", 4);
+            House house3 = new House("Svanemøllevej 58", "Hellerup", 8);
             //Store House Entities
             em.persist(house1);
             em.persist(house2);
             em.persist(house3);
             //Create Rental Entities
-            Rental rental1 = new Rental(1,"15.02.1982", "22.02.2048", 4850, (4850*3), "Morten Olsen", null, null);
-            Rental rental2 = new Rental(2,"04.06.1891", "04.06.2055", 3127, (3127*3), "Susan Petersen", null, null);
-            Rental rental3 = new Rental(3,"21.09.2004", "18.11.2068", 9427, (9427*3), "Helvig Kartoffelberg", null, null);
+            Rental rental1 = new Rental("15.02.1982", "22.02.2048", 4850, (4850*3), "Morten Olsen", null, null);
+            Rental rental2 = new Rental("04.06.1891", "04.06.2055", 3127, (3127*3), "Susan Petersen", null, null);
+            Rental rental3 = new Rental("21.09.2004", "18.11.2068", 9427, (9427*3), "Helvig Kartoffelberg", null, null);
             //Set House's rental agreement
             rental1.setHouse(house1);
             rental2.setHouse(house2);
@@ -57,9 +57,9 @@ public class Populator {
             List<Rental> rentalList3 = new ArrayList<>();
             rentalList1.add(rental3);
             //Create Tenant Entity
-            Tenant tenant1 = new Tenant(1,"Ole Henriksen", 22505084, "Make-Up Manden", rentalList1);
-            Tenant tenant2 = new Tenant(2,"Rodja Pjort", 84901004, "Som flyver bort", rentalList2);
-            Tenant tenant3 = new Tenant(3,"Hella Joof", 28649020, "Medie-Menneske", rentalList3);
+            Tenant tenant1 = new Tenant("Ole Henriksen", 22505084, "Make-Up Manden", rentalList1);
+            Tenant tenant2 = new Tenant("Rodja Pjort", 84901004, "Som flyver bort", rentalList2);
+            Tenant tenant3 = new Tenant("Hella Joof", 28649020, "Medie-Menneske", rentalList3);
             //Store Tenants
             em.persist(tenant1);
             em.persist(tenant2);
@@ -109,17 +109,17 @@ public class Populator {
             //En mand kan derfor først sætte sig som udlejer til sidst
 
             //Create House Entities
-            House house1 = new House(1,"Valnøddevej 4", "Hornbæk", 6);
-            House house2 = new House(2,"Bretagnevej 28", "Ålsgårde", 4);
-            House house3 = new House(3,"Svanemøllevej 58", "Hellerup", 8);
+            House house1 = new House("Valnøddevej 4", "Hornbæk", 6);
+            House house2 = new House("Bretagnevej 28", "Ålsgårde", 4);
+            House house3 = new House("Svanemøllevej 58", "Hellerup", 8);
             //Store House Entities
             em.persist(house1);
             em.persist(house2);
             em.persist(house3);
             //Create Rental Entities
-            Rental rental1 = new Rental(1,"15.02.1982", "22.02.2048", 4850, (4850*3), "Morten Olsen", null, null);
-            Rental rental2 = new Rental(2,"04.06.1891", "04.06.2055", 3127, (3127*3), "Susan Petersen", null, null);
-            Rental rental3 = new Rental(3,"21.09.2004", "18.11.2068", 9427, (9427*3), "Helvig Kartoffelberg", null, null);
+            Rental rental1 = new Rental("15.02.1982", "22.02.2048", 4850, (4850*3), "Morten Olsen", null, null);
+            Rental rental2 = new Rental("04.06.1891", "04.06.2055", 3127, (3127*3), "Susan Petersen", null, null);
+            Rental rental3 = new Rental("21.09.2004", "18.11.2068", 9427, (9427*3), "Helvig Kartoffelberg", null, null);
             //Set House's rental agreement
             rental1.setHouse(house1);
             rental2.setHouse(house2);
@@ -138,9 +138,9 @@ public class Populator {
             List<Rental> rentalList3 = new ArrayList<>();
             rentalList3.add(rental3);
             //Create Tenant Entity
-            Tenant tenant1 = new Tenant(1,"Ole Henriksen", 22505084, "Make-Up Manden", rentalList1);
-            Tenant tenant2 = new Tenant(2,"Rodja Pjort", 84901004, "Som flyver bort", rentalList2);
-            Tenant tenant3 = new Tenant(3,"Hella Joof", 28649020, "Medie-Menneske", rentalList3);
+            Tenant tenant1 = new Tenant("Ole Henriksen", 22505084, "Make-Up Manden", rentalList1);
+            Tenant tenant2 = new Tenant("Rodja Pjort", 84901004, "Som flyver bort", rentalList2);
+            Tenant tenant3 = new Tenant("Hella Joof", 28649020, "Medie-Menneske", rentalList3);
             //Store Tenants
             em.persist(tenant1);
             em.persist(tenant2);

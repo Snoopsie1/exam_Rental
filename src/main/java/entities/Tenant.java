@@ -21,13 +21,6 @@ public class Tenant {
 
     public Tenant() {}
 
-    public Tenant(int id, String name, int phoneNum, String job, List<Rental> rentals) {
-        this.id = id;
-        this.name = name;
-        this.phoneNum = phoneNum;
-        this.job = job;
-        this.rentals = rentals;
-    }
     //For Admin to create a Tenant.
     public Tenant(String name, int phoneNum, String job, List<Rental> rentals) {
         this.name = name;

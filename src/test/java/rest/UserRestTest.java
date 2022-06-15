@@ -86,17 +86,17 @@ public class UserRestTest {
             //En mand kan derfor først sætte sig som udlejer til sidst
 
             //Create House Entities
-            h1 = new House(1,"Valnøddevej 4", "Hornbæk", 6);
-            h2 = new House(2,"Bretagnevej 28", "Ålsgårde", 4);
-            h3 = new House(3,"Svanemøllevej 58", "Hellerup", 8);
+            h1 = new House("Valnøddevej 4", "Hornbæk", 6);
+            h2 = new House("Bretagnevej 28", "Ålsgårde", 4);
+            h3 = new House("Svanemøllevej 58", "Hellerup", 8);
             //Store House Entities
             em.persist(h1);
             em.persist(h2);
             em.persist(h3);
             //Create Rental Entities
-            r1 = new Rental(1,"15.02.1982", "22.02.2048", 4850, (4850*3), "Morten Olsen", null, null);
-            r2 = new Rental(2,"04.06.1891", "04.06.2055", 3127, (3127*3), "Susan Petersen", null, null);
-            r3 = new Rental(3,"21.09.2004", "18.11.2068", 9427, (9427*3), "Helvig Kartoffelberg", null, null);
+            r1 = new Rental("15.02.1982", "22.02.2048", 4850, (4850*3), "Morten Olsen", null, null);
+            r2 = new Rental("04.06.1891", "04.06.2055", 3127, (3127*3), "Susan Petersen", null, null);
+            r3 = new Rental("21.09.2004", "18.11.2068", 9427, (9427*3), "Helvig Kartoffelberg", null, null);
             //Set House's rental agreement
             r1.setHouse(h1);
             r2.setHouse(h2);
@@ -115,9 +115,9 @@ public class UserRestTest {
             rl3 = new ArrayList<>();
             rl3.add(r3);
             //Create Tenant Entity
-            t1 = new Tenant(1,"Ole Henriksen", 22505084, "Make-Up Manden", rl1);
-            t2 = new Tenant(2,"Rodja Pjort", 84901004, "Som flyver bort", rl2);
-            t3 = new Tenant(3,"Hella Joof", 28649020, "Medie-Menneske", rl3);
+            t1 = new Tenant("Ole Henriksen", 22505084, "Make-Up Manden", rl1);
+            t2 = new Tenant("Rodja Pjort", 84901004, "Som flyver bort", rl2);
+            t3 = new Tenant("Hella Joof", 28649020, "Medie-Menneske", rl3);
             //Store Tenants
             em.persist(t1);
             em.persist(t2);

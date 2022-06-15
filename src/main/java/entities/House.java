@@ -3,6 +3,7 @@ package entities;
 import dtos.HouseDTO;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 public class House {
@@ -14,13 +15,7 @@ public class House {
     private String city;
     private int numberOfRooms;
 
-    public House() {}
-
-    public House(int id, String address, String city, int numberOfRooms) {
-        this.id = id;
-        this.address = address;
-        this.city = city;
-        this.numberOfRooms = numberOfRooms;
+    public House() {
     }
 
     //For Admin to create a House.
@@ -69,6 +64,7 @@ public class House {
     public void setNumberOfRooms(int numberOfRooms) {
         this.numberOfRooms = numberOfRooms;
     }
+
 
     @Override
     public String toString() {

@@ -27,17 +27,7 @@ public class Rental {
     @Transient
     private List<String> tenantNames;
 
-    public Rental(){}
-
-    public Rental(int id, String startDate, String endDate, int priceAnnual, int deposit, String contactPerson, List<Tenant> tenants, House house) {
-        this.id = id;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.priceAnnual = priceAnnual;
-        this.deposit = deposit;
-        this.contactPerson = contactPerson;
-        this.tenants = tenants;
-        this.house = house;
+    public Rental() {
     }
 
     //For Admin to create a Rental Agreement.

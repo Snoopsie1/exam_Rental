@@ -43,6 +43,7 @@ public class UserResource {
         for (Rental rental : rentalList) {
             rentalDTOList.add(new RentalDTO(rental));
         }
+        System.out.println(rentalDTOList);
         return Response.ok().entity(GSON.toJson(rentalDTOList)).build();
     }
 
