@@ -18,6 +18,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Path("admin")
@@ -91,5 +92,18 @@ public class AdminResource {
         return Response.ok().entity(GSON.toJson(newTenantDTO)).build();
     }
 
-
+    //TODO: US-5 As an admin, I would like to update a rental agreement to change a tenant
+    @PUT
+    @Path("/rental/{id}")
+    @Produces({MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Response updateTenantsOnSelectedRental(@PathParam("id") int id, String content) throws EntityNotFoundException {
+        TenantDTO[] tenantDTOs = GSON.fromJson(content, TenantDTO[].class);
+        List<TenantDTO> tenantDTOList = Arrays.asList(tenantDTOs);
+        List<Tenant> tenants = new ArrayList<>();
+        for (TenantDTO tenantDTO : tenantDTOList) {
+            tenants.add(new Tenant(tenantDTO));
+        }
+        return Response.ok().entity(GSON.toJson(new RentalDTO(adminREPO.changeTenantsOnRentalAgreement(id, tenants)))).build();
+    }
 }

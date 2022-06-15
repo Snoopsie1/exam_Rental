@@ -19,12 +19,9 @@ public class Tenant {
     @ManyToMany(targetEntity = Rental.class)
     private List<Rental> rentals;
 
-    public Tenant() {
-        super();
-    }
+    public Tenant() {}
 
     public Tenant(int id, String name, int phoneNum, String job, List<Rental> rentals) {
-        super();
         this.id = id;
         this.name = name;
         this.phoneNum = phoneNum;

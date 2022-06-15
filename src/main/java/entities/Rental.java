@@ -27,9 +27,7 @@ public class Rental {
     @Transient
     private List<String> tenantNames;
 
-    public Rental(){
-        super();
-    }
+    public Rental(){}
 
     public Rental(int id, String startDate, String endDate, int priceAnnual, int deposit, String contactPerson, List<Tenant> tenants, House house) {
         this.id = id;

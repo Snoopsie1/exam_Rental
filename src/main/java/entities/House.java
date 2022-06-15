@@ -14,9 +14,7 @@ public class House {
     private String city;
     private int numberOfRooms;
 
-    public House() {
-        super();
-    }
+    public House() {}
 
     public House(int id, String address, String city, int numberOfRooms) {
         this.id = id;
