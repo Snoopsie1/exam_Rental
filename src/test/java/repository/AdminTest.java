@@ -117,7 +117,7 @@ public class AdminTest {
     }
 
     @Test
-    public void US4_createRental() {
+    public void US4_createRentalTest() {
         Rental createdRental =
                 adminREPO.createRental(
                         "00.00.0000","14.08.1928",
@@ -147,7 +147,7 @@ public class AdminTest {
     }
 
     @Test
-    public void US4_createTenant(){
+    public void US4_createTenantTest(){
 
         Tenant createdTenant = adminREPO.createTenant("SvenErik", 22505084, "Tømmer",null);
 
@@ -163,6 +163,36 @@ public class AdminTest {
             if(checkTenant == null)
                 throw new EntityNotFoundException("TEST - Your entity was not found");
             System.out.println("Tenant Entity with ID: " + createdTenant.getId() +" was found!");
+        } finally {
+            em.close();
+        }
+    }
+
+    //TODO: US-5 As an admin, I would like to update a rental agreement to change a tenant
+    //Process:
+    //1. Admin clicks [Change Tenant] on Rental Agreement
+    //2. Clicked Rental Agreement's ID is used to find given object in DB
+    //3. Admin is prompted to select new tenant via a menu
+    //4. New Tenant is set via setMethods() on Rental Agreement
+    //5. And get caught as an update via em.merge()
+    @Test
+    public void US5_changeTenantOnRentalTest(){
+
+        int idToFind = 3;
+        EntityManager em = emf.createEntityManager();
+
+        try {
+            Rental rentalAgreementToFind = em.find(Rental.class, idToFind);
+            System.out.println("Tenants Before: ");
+            for (Tenant tenants : rentalAgreementToFind.getTenants()) {
+                System.out.println(tenants.getName());
+            }
+            rentalAgreementToFind.setTenants(demoTenantList);
+            em.merge(rentalAgreementToFind);
+            System.out.println("Tenants Now: ");
+            for (Tenant tenants : rentalAgreementToFind.getTenants()) {
+                System.out.println(tenants.getName());
+            }
         } finally {
             em.close();
         }

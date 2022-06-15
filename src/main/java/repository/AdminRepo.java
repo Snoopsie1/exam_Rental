@@ -143,4 +143,13 @@ public class AdminRepo {
         }
         return createdTenant;
     }
+
+    //TODO: US-5 As an admin, I would like to update a rental agreement to change a tenant
+    //Process:
+    //1. Admin clicks on rental agreement
+    //2. Get's clicked Rental Agreement's ID
+    //3. Use ID to find agreement
+    //4. Make changes via setMethods()
+    //5. Update agreements with em.Merge()
+
 }
