@@ -43,27 +43,6 @@ public class UserTest {
         Populator.populateLocalTEST();
     }
 
-    //TODO: Is unnecessary, remove later
-    @AfterAll
-    public static void tearDownClass() {
-//        Clean up database after test is done or use a persistence unit with drop-and-create to start up clean on every test
-//        EntityManager em = emf.createEntityManager();
-//        try {
-//            em.getTransaction().begin();
-//
-//            Query q1 = em.createQuery("DELETE FROM House");
-//            Query q2 = em.createQuery("DELETE FROM Rental ");
-//            Query q3 = em.createQuery("DELETE FROM Tenant");
-//            q1.executeUpdate();
-//            q2.executeUpdate();
-//            q3.executeUpdate();
-//
-//            em.getTransaction().commit();
-//        } finally {
-//            em.close();
-//        }
-    }
-
     @BeforeEach
     public void setup() {
 
