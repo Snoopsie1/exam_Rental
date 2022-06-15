@@ -1,5 +1,7 @@
 package entities;
 
+import dtos.TenantDTO;
+
 import javax.annotation.Generated;
 import javax.persistence.*;
 import java.util.List;
@@ -35,6 +37,15 @@ public class Tenant {
         this.phoneNum = phoneNum;
         this.job = job;
         this.rentals = rentals;
+    }
+
+    //For DTO Conversion
+    public Tenant(TenantDTO tenantDTO){
+        this.id = tenantDTO.getId();
+        this.name = tenantDTO.getName();
+        this.phoneNum = tenantDTO.getPhoneNum();
+        this.job = tenantDTO.getJob();
+        tenantDTO.getRentals().forEach(rentalDTO -> this.rentals.add(new Rental(rentalDTO)));
     }
 
     public int getId() {

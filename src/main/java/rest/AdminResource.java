@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import dtos.HouseDTO;
 import dtos.RentalDTO;
 import dtos.TenantDTO;
+import entities.House;
 import entities.Rental;
 import entities.Tenant;
 import repository.AdminRepo;
@@ -13,10 +14,7 @@ import utils.EMF_Creator;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityNotFoundException;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
@@ -50,5 +48,48 @@ public class AdminResource {
 
         return Response.ok().entity(GSON.toJson(tenantDTOS)).build();
     }
+
+    //TODO: US-4 As an admin I would like to create new rental agreements, tenants and houses
+    //House Part
+    @POST
+    @Path("/house/")
+    @Produces({MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Response createHouse(String content) {
+        HouseDTO houseDTO = GSON.fromJson(content, HouseDTO.class);
+        House house = new House(houseDTO);
+        HouseDTO newHouseDTO = new HouseDTO(adminREPO.createHouse(house.getAddress(), house.getCity(), house.getNumberOfRooms()));
+        return Response.ok().entity(GSON.toJson(newHouseDTO)).build();
+    }
+
+    //Rental Part
+    @POST
+    @Path("/rental/")
+    @Produces({MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Response createRental(String content) {
+        RentalDTO rentalDTO = GSON.fromJson(content, RentalDTO.class);
+        Rental rental = new Rental(rentalDTO);
+        RentalDTO newRentalDTO = new RentalDTO(adminREPO.createRental(
+                rental.getStartDate(), rental.getEndDate(),
+                rental.getPriceAnnual(), rental.getDeposit(),
+                rental.getContactPerson(), rental.getTenants(), rental.getHouse()));
+        return Response.ok().entity(GSON.toJson(newRentalDTO)).build();
+    }
+
+    //Tenant Part
+    @POST
+    @Path("/tenant/")
+    @Produces({MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Response createTenant(String content) {
+        TenantDTO tenantDTO = GSON.fromJson(content, TenantDTO.class);
+        Tenant tenant = new Tenant(tenantDTO);
+        TenantDTO newTenantDTO = new TenantDTO(adminREPO.createTenant(
+                tenant.getName(), tenant.getPhoneNum(),
+                tenant.getJob(), tenant.getRentals()));
+        return Response.ok().entity(GSON.toJson(newTenantDTO)).build();
+    }
+
 
 }

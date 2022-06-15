@@ -1,5 +1,8 @@
 package entities;
 
+import dtos.RentalDTO;
+import jdk.nashorn.internal.ir.annotations.Ignore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -20,6 +23,9 @@ public class Rental {
 
     @ManyToOne
     private House house;
+
+    @Transient
+    private List<String> tenantNames;
 
     public Rental(){
         super();
@@ -45,6 +51,18 @@ public class Rental {
         this.contactPerson = contactPerson;
         this.tenants = tenants;
         this.house = house;
+    }
+
+    //For DTO Conversion
+    public Rental(RentalDTO rentalDTO){
+        this.id = rentalDTO.getId();
+        this.startDate = rentalDTO.getStartDate();
+        this.endDate = rentalDTO.getEndDate();
+        this.priceAnnual = rentalDTO.getPriceAnnual();
+        this.deposit = rentalDTO.getDeposit();
+        this.contactPerson = rentalDTO.getContactPerson();
+        this.tenantNames = rentalDTO.getTenantNames();
+        this.house = new House(rentalDTO.getHouse());
     }
 
     public int getId() {

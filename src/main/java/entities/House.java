@@ -1,5 +1,7 @@
 package entities;
 
+import dtos.HouseDTO;
+
 import javax.persistence.*;
 
 @Entity
@@ -28,6 +30,14 @@ public class House {
         this.address = address;
         this.city = city;
         this.numberOfRooms = numberOfRooms;
+    }
+
+    //DTO Conversion
+    public House(HouseDTO houseDTO){
+        this.id = houseDTO.getId();
+        this.address = houseDTO.getAddress();
+        this.city = houseDTO.getCity();
+        this.numberOfRooms = houseDTO.getNumberOfRooms();
     }
 
     public int getId() {

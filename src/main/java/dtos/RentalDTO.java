@@ -97,4 +97,12 @@ public class RentalDTO {
     public void setTenantNames(List<String> tenantNames) {
         this.tenantNames = tenantNames;
     }
+
+    public HouseDTO getHouse() {
+        return house;
+    }
+
+    public void setHouse(HouseDTO house) {
+        this.house = house;
+    }
 }
