@@ -46,7 +46,6 @@ public class AdminResource {
         for (Tenant tenant : tenantList) {
             tenantDTOS.add(new TenantDTO(tenant));
         }
-
         return Response.ok().entity(GSON.toJson(tenantDTOS)).build();
     }
 

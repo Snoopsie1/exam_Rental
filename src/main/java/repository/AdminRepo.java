@@ -77,10 +77,8 @@ public class AdminRepo {
     public List<Tenant> getTenantsInSpecificHouse(int houseId){
         EntityManager em = emf.createEntityManager();
         List<Tenant> foundTenants;
-        int givenId = 1;
-
         try {
-            House tenantsHouse = em.find(House.class, givenId);
+            House tenantsHouse = em.find(House.class, houseId);
             TypedQuery<Rental> rentalTQ = em.createQuery("SELECT r FROM Rental r WHERE r.house.id is not null and r.house.id = :givenHouseId", Rental.class);
             rentalTQ.setParameter("givenHouseId", tenantsHouse.getId());
             Rental tenantsRental = rentalTQ.getSingleResult();

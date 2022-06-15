@@ -52,10 +52,10 @@ public class Populator {
             rentalList1.add(rental1);
             //Create Rental List2
             List<Rental> rentalList2 = new ArrayList<>();
-            rentalList1.add(rental2);
+            rentalList2.add(rental2);
             //Create Rental List3
             List<Rental> rentalList3 = new ArrayList<>();
-            rentalList1.add(rental3);
+            rentalList3.add(rental3);
             //Create Tenant Entity
             Tenant tenant1 = new Tenant("Ole Henriksen", 22505084, "Make-Up Manden", rentalList1);
             Tenant tenant2 = new Tenant("Rodja Pjort", 84901004, "Som flyver bort", rentalList2);
