@@ -178,23 +178,29 @@ public class AdminTest {
     @Test
     public void US5_changeTenantOnRentalTest(){
 
-        int idToFind = 3;
-        EntityManager em = emf.createEntityManager();
+        //Expectation Setup
+        Rental expectedRentalToChange = new Rental(3,"21.09.2004", "18.11.2068", 9427, (9427*3), "Helvig Kartoffelberg", null, null);
+        List<Rental> rentalList3 = new ArrayList<>();
+        rentalList3.add(expectedRentalToChange);
+        Tenant tenant3 = new Tenant(3,"Hella Joof", 28649020, "Medie-Menneske", rentalList3);
+        List<Tenant> tenantList3 = new ArrayList<>();
+        tenantList3.add(tenant3);
+        expectedRentalToChange.setTenants(tenantList3);
 
-        try {
-            Rental rentalAgreementToFind = em.find(Rental.class, idToFind);
-            System.out.println("Tenants Before: ");
-            for (Tenant tenants : rentalAgreementToFind.getTenants()) {
-                System.out.println(tenants.getName());
-            }
-            rentalAgreementToFind.setTenants(demoTenantList);
-            em.merge(rentalAgreementToFind);
-            System.out.println("Tenants Now: ");
-            for (Tenant tenants : rentalAgreementToFind.getTenants()) {
-                System.out.println(tenants.getName());
-            }
-        } finally {
-            em.close();
+        assertEquals("Hella Joof", expectedRentalToChange.getTenants().get(0).getName());
+
+        System.out.println("Tenants Before:");
+        for (Tenant tenant : expectedRentalToChange.getTenants()) {
+            System.out.println(tenant.getName());
         }
+        //Actual Setup
+        Rental actualRentalToChange = adminREPO.changeTenantsOnRentalAgreement(3, demoTenantList);
+        System.out.println("Tenants After:");
+        for (Tenant tenant : actualRentalToChange.getTenants()) {
+            System.out.println(tenant.getName());
+        }
+
+        assertEquals("Ole Henriksen", actualRentalToChange.getTenants().get(0).getName());
+
     }
 }

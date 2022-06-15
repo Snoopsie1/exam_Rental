@@ -151,5 +151,29 @@ public class AdminRepo {
     //3. Use ID to find agreement
     //4. Make changes via setMethods()
     //5. Update agreements with em.Merge()
+    public Rental changeTenantsOnRentalAgreement(int rentalId, List<Tenant> newTenants){
+        EntityManager em = emf.createEntityManager();
+        Rental foundRental;
+
+        try{
+            foundRental = em.find(Rental.class, rentalId);
+
+            foundRental.setTenants(newTenants);
+            em.getTransaction().begin();
+            em.merge(foundRental);
+            List<Rental> newRentals = new ArrayList<>();
+            newRentals.add(foundRental);
+
+            for (Tenant newTenant : newTenants) {
+                newTenant.setRentals(newRentals);
+                em.merge(newTenant);
+            }
+            em.getTransaction().commit();
+
+        } finally {
+            em.close();
+        }
+        return foundRental;
+    }
 
 }

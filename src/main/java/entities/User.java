@@ -30,6 +30,7 @@ public class User implements Serializable {
   @ManyToMany(cascade = CascadeType.PERSIST)
   private List<Role> roleList = new ArrayList<>();
 
+
   public List<String> getRolesAsStrings() {
     if (roleList.isEmpty()) {
       return null;
