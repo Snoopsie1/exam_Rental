@@ -1,0 +1,14 @@
+POST https://tychondi.dk/exam_Tenant/api/admin/house/
+
+{"address":"Mitzubishi", "city":"F15", "numOfRooms": 0}
+###
+POST http://localhost:8080/exam_Tenant_war_exploded/api/admin/rental/
+
+{"startDate":"01.09.1962", "endDate":"27.6.2062", "priceAnnual": 111, "deposit": 333,
+ "contactPerson":"Hans Hansen", "tenantsNames":["Ole Pederesen","Svend Åge"], "house":{"address":"Kelder Vej 54", "city":"Julby", "numOfRooms": 4}}
+###
+POST http://localhost:8080/exam_Tenant_war_exploded/api/admin/tenant/
+
+{"name":"Ole Eriksen","phoneNum":44707021, "job":"Snedker",
+"rentals":{"startDate":"01.09.1962", "endDate":"27.6.2062", "priceAnnual": 111, "deposit": 333,
+ "contactPerson":"Hans Hansen", "tenantsNames":["Ole Eriksen"], "house":{"address":"Kelder Vej 54", "city":"Julby", "numOfRooms": 4}}}

@@ -21,7 +21,7 @@ public class Rental {
     @ManyToMany(targetEntity = Tenant.class)
     private List<Tenant> tenants;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private House house;
 
     @Transient
